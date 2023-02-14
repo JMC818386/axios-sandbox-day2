@@ -1,3 +1,8 @@
+//Creates an empty array to be used later
+let result = [];
+//Variable 
+let nextRow = 0;
+
 let url = 'https://datausa.io/api/data?drilldowns=Nation&measures=Population';
 /* console.log(dataTable); */
 
@@ -18,7 +23,8 @@ axios.get(url)
     fourthRow = response.data.data[3]; */
 
     //Runs function populateTable, accessing data from API
-    populateTable(response.data.data);
+   /*  populateTable(response.data.data); */
+   result = response.data.data;
   })
 
   //If url doesn't work log error to console
@@ -31,8 +37,8 @@ axios.get(url)
   });
 
   //Function populates dataTable rows and cells with API data
-  function populateTable(arr) {
-      for(const row of arr) {
+  function populateTable() {
+    let row = result[nextRow]
         console.log(row);
         //Variable named newRow creates a new row
         let newRow = document.createElement('tr');
@@ -58,9 +64,10 @@ axios.get(url)
 
         //Append newRow to dataTable
         document.getElementById('dataTable').appendChild(newRow);
-      }
+      nextRow++
   }
 //Figure out what to do with the data
-//Create button that calls a function that does something to data
+//Create button that loads 1 row at a time
 //Create a function that does something to the data
 
+document.getElementById("loadRow").addEventListener("click", populateTable);
